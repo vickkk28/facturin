@@ -17,7 +17,7 @@ class ClienteController extends Controller
             ->when($busqueda, function ($query, $busqueda) {
                 $query->where(function ($q) use ($busqueda) {
                     $q->where('razon_social', 'like', "%{$busqueda}%")
-                      ->orWhere('cuit', 'like', "%{$busqueda}%");
+                        ->orWhere('cuit', 'like', "%{$busqueda}%");
                 });
             })
             ->orderBy('razon_social')
@@ -30,7 +30,7 @@ class ClienteController extends Controller
     // Muestra el formulario vacío
     public function create()
     {
-        return view('clientes.create', ['cliente' => new Cliente()]);
+        return view('clientes.create', ['cliente' => new Cliente]);
     }
 
     // Guarda un cliente nuevo
@@ -74,16 +74,16 @@ class ClienteController extends Controller
     private function validar(Request $request, ?Cliente $cliente = null): array
     {
         return $request->validate([
-            'razon_social'  => ['required', 'string', 'max:255'],
-            'cuit'          => ['required', 'digits:11', Rule::unique('clientes', 'cuit')->ignore($cliente?->id)],
+            'razon_social' => ['required', 'string', 'max:255'],
+            'cuit' => ['required', 'digits:11', Rule::unique('clientes', 'cuit')->ignore($cliente?->id)],
             'condicion_iva' => ['required', Rule::in(array_keys(Cliente::CONDICIONES_IVA))],
-            'email'         => ['nullable', 'email', 'max:255'],
-            'telefono'      => ['nullable', 'string', 'max:50'],
-            'domicilio'     => ['nullable', 'string', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'telefono' => ['nullable', 'string', 'max:50'],
+            'domicilio' => ['nullable', 'string', 'max:255'],
         ], [
-            'required'    => 'Este campo es obligatorio.',
-            'email'       => 'Ingresá un email válido.',
-            'max'         => 'Es demasiado largo.',
+            'required' => 'Este campo es obligatorio.',
+            'email' => 'Ingresá un email válido.',
+            'max' => 'Es demasiado largo.',
             'cuit.digits' => 'El CUIT debe tener 11 números, sin guiones.',
             'cuit.unique' => 'Ya existe un cliente con ese CUIT.',
         ]);

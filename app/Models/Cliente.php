@@ -12,6 +12,7 @@ class Cliente extends Model
         'exento' => 'Exento',
         'consumidor_final' => 'Consumidor Final',
     ];
+
     protected $fillable = [
         'razon_social',
         'cuit',

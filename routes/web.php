@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ClienteController;
+use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
 
@@ -11,5 +11,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 require __DIR__.'/settings.php';
 Route::middleware(['auth'])->group(function () {
-        Route::resource('clientes', ClienteController::class)->except(['show']);
+    Route::resource('clientes', ClienteController::class)->except(['show']);
 });
