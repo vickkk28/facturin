@@ -2,12 +2,13 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ComprobanteController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::view('/', 'welcome')->name('home');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
 });
 
 Route::middleware(['auth'])->group(function () {
