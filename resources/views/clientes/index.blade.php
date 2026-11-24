@@ -43,7 +43,11 @@
                 <tbody class="divide-y divide-neutral-200 dark:divide-neutral-700">
                     @forelse ($clientes as $cliente)
                         <tr>
-                            <td class="px-4 py-3">{{ $cliente->razon_social }}</td>
+                            <td class="px-4 py-3">
+                                <a href="{{ route('clientes.show', $cliente) }}" class="font-medium text-blue-600 hover:underline dark:text-blue-400">
+                                    {{ $cliente->razon_social }}
+                                </a>
+                            </td>
                             <td class="px-4 py-3 font-mono">
                                 {{ substr($cliente->cuit, 0, 2) }}-{{ substr($cliente->cuit, 2, 8) }}-{{ substr($cliente->cuit, 10, 1) }}
                             </td>
@@ -51,6 +55,7 @@
                             <td class="px-4 py-3">{{ $cliente->email ?? '—' }}</td>
                             <td class="px-4 py-3">
                                 <div class="flex justify-end gap-3">
+                                    <a href="{{ route('clientes.show', $cliente) }}" class="text-blue-600 hover:underline dark:text-blue-400">Ver</a>
                                     <a href="{{ route('clientes.edit', $cliente) }}" class="text-blue-600 hover:underline dark:text-blue-400">Editar</a>
                                     <form method="POST" action="{{ route('clientes.destroy', $cliente) }}"
                                           onsubmit="return confirm('¿Eliminar a {{ $cliente->razon_social }}?')">

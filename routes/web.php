@@ -12,7 +12,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('clientes', ClienteController::class)->except(['show']);
+    Route::resource('clientes', ClienteController::class);
     Route::resource('comprobantes', ComprobanteController::class)->only(['index', 'create', 'store']);
 });
 

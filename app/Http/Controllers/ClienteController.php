@@ -46,6 +46,24 @@ class ClienteController extends Controller
             ->with('status', 'Cliente creado correctamente.');
     }
 
+    // Ficha del cliente: total facturado y sus comprobantes, con filtro de fechas opcional
+    public function show(Request $request, Cliente $cliente): View
+    {
+        $desde = $request->date('desde')?->toDateString();
+        $hasta = $request->date('hasta')?->toDateString();
+
+        $comprobantes = $cliente->comprobantes()
+            ->when($desde, fn ($query) => $query->where('fecha', '>=', $desde))
+            ->when($hasta, fn ($query) => $query->where('fecha', '<=', $hasta))
+            ->orderByDesc('fecha')
+            ->orderByDesc('numero')
+            ->get();
+
+        $total = (float) $comprobantes->sum('importe');
+
+        return view('clientes.show', compact('cliente', 'comprobantes', 'total', 'desde', 'hasta'));
+    }
+
     // Muestra el formulario con los datos del cliente
     public function edit(Cliente $cliente): View
     {
