@@ -54,7 +54,7 @@ class ComprobanteController extends Controller
             'importe.min' => 'El importe tiene que ser mayor a 0.',
         ]);
 
-                $cliente = Cliente::findOrFail((int) $datos['cliente_id']);
+        $cliente = Cliente::findOrFail((int) $datos['cliente_id']);
         $tipo = Comprobante::tipoPara($cliente);
 
         // Transacción: busca el último número y guarda el nuevo como una sola operación,
