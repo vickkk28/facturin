@@ -19,6 +19,10 @@
                     <flux:sidebar.item icon="users" :href="route('clientes.index')" :current="request()->routeIs('clientes.*')" wire:navigate>
                         {{ __('Clientes') }}
                     </flux:sidebar.item>
+
+                    <flux:sidebar.item icon="document-text" :href="route('comprobantes.index')" :current="request()->routeIs('comprobantes.*')" wire:navigate>
+                        {{ __('Comprobantes') }}
+                    </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 

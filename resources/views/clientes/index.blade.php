@@ -15,6 +15,12 @@
             </div>
         @endif
 
+        @if (session('error'))
+            <div class="rounded-lg border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800 dark:border-red-700 dark:bg-red-900/30 dark:text-red-300">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <form method="GET" action="{{ route('clientes.index') }}" class="flex gap-2">
             <input type="text" name="q" value="{{ $busqueda }}" placeholder="Buscar por razón social o CUIT…"
                    class="w-full max-w-sm rounded-lg border border-neutral-300 bg-white px-3 py-2 text-sm dark:border-neutral-600 dark:bg-neutral-800 dark:text-white">

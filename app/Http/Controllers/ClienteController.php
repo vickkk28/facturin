@@ -63,20 +63,22 @@ class ClienteController extends Controller
             ->with('status', 'Cliente actualizado correctamente.');
     }
 
-    // Borra el cliente
+    // Borra el cliente, salvo que tenga comprobantes emitidos
     public function destroy(Cliente $cliente): RedirectResponse
     {
+        if ($cliente->comprobantes()->exists()) {
+            return redirect()->route('clientes.index')
+                ->with('error', 'No se puede eliminar: el cliente tiene comprobantes emitidos.');
+        }
+
         $cliente->delete();
 
         return redirect()->route('clientes.index')
             ->with('status', 'Cliente eliminado.');
     }
 
-    /**
-     * Reglas de validación compartidas entre crear y editar.
-     *
-     * @return array<string, mixed>
-     */
+    // Reglas de validación compartidas entre crear y editar
+    /** @return array<string, mixed> */
     private function validar(Request $request, ?Cliente $cliente = null): array
     {
         return $request->validate([
