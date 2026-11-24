@@ -3,13 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
 class ClienteController extends Controller
 {
     // Lista los clientes, con búsqueda y paginado
-    public function index(Request $request)
+    public function index(Request $request): View
     {
         $busqueda = $request->input('q');
 
@@ -28,13 +30,13 @@ class ClienteController extends Controller
     }
 
     // Muestra el formulario vacío
-    public function create()
+    public function create(): View
     {
         return view('clientes.create', ['cliente' => new Cliente]);
     }
 
     // Guarda un cliente nuevo
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $datos = $this->validar($request);
 
@@ -45,13 +47,13 @@ class ClienteController extends Controller
     }
 
     // Muestra el formulario con los datos del cliente
-    public function edit(Cliente $cliente)
+    public function edit(Cliente $cliente): View
     {
         return view('clientes.edit', compact('cliente'));
     }
 
     // Guarda los cambios
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request, Cliente $cliente): RedirectResponse
     {
         $datos = $this->validar($request, $cliente);
 
@@ -62,7 +64,7 @@ class ClienteController extends Controller
     }
 
     // Borra el cliente
-    public function destroy(Cliente $cliente)
+    public function destroy(Cliente $cliente): RedirectResponse
     {
         $cliente->delete();
 
@@ -70,7 +72,11 @@ class ClienteController extends Controller
             ->with('status', 'Cliente eliminado.');
     }
 
-    // Reglas de validación compartidas entre crear y editar
+    /**
+     * Reglas de validación compartidas entre crear y editar.
+     *
+     * @return array<string, mixed>
+     */
     private function validar(Request $request, ?Cliente $cliente = null): array
     {
         return $request->validate([
